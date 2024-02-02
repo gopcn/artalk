@@ -35,7 +35,7 @@ jobs:
       - name: Commit Changes
         uses: github-actions-x/commit@v2.9
         with:
-          github-token: ${{ secrets.AUTH_PAT }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "${{ steps.get-latest-release.outputs.release }}"
           files: memos
           rebase: 'true'
