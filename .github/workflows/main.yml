@@ -1,4 +1,4 @@
-name: Update Memos and Create Release
+name: Update Artalk Binary
 
 on:
   schedule:
@@ -7,46 +7,34 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
-    
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "gopcn"
+          git config --global user.email "121377609+gopcn@users.noreply.github.com"
 
       - name: Get latest release
         id: get-latest-release
         uses: pozetroninc/github-action-get-latest-release@master
         with:
-          repository: usememos/memos
+          repository: ArtalkJS/Artalk
           excludes: prerelease, draft
-          token: ${{ secrets.AUTH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Release
-        run: |
-          git clone https://github.com/usememos/memos.git build
-          cd build/web
-          yarn && yarn build
-          cd ..
-          cp -r -f web/dist ./server
-          go build -o memos ./main.go
-          rm -rf ../memos && cp -r -f ./memos ../
-          cd ..
+      - name: Download and Extract Artalk
+        run: curl -sL "https://github.com/ArtalkJS/Artalk/releases/download/${{ steps.get-latest-release.outputs.release }}/artalk_${{ steps.get-latest-release.outputs.release }}_linux_amd64.tar.gz" | tar -zxv --strip-components=1
 
       - name: Commit Changes
         uses: github-actions-x/commit@v2.9
         with:
           github-token: ${{ secrets.AUTH_PAT }}
           commit-message: "${{ steps.get-latest-release.outputs.release }}"
-          files: memos
+          files: artalk artalk.yml
           rebase: 'true'
           name: gopcn
           email: 121377609+gopcn@users.noreply.github.com
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: memos
-          tag_name: ${{ steps.get-latest-release.outputs.release }}
-          title: Release ${{ steps.get-latest-release.outputs.release }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.AUTH_PAT }}
