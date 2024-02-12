@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
         with:
           repository: usememos/memos
           excludes: prerelease, draft
-          token: ${{ secrets.AUTH_PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Release
         run: |
@@ -39,8 +39,8 @@ jobs:
           commit-message: "${{ steps.get-latest-release.outputs.release }}"
           files: memos
           rebase: 'true'
-          name: gopcn
-          email: 121377609+gopcn@users.noreply.github.com
+          name: GitHub Action
+          email: action@github.com
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
@@ -49,4 +49,4 @@ jobs:
           tag_name: ${{ steps.get-latest-release.outputs.release }}
           title: Release ${{ steps.get-latest-release.outputs.release }}
         env:
-          GITHUB_TOKEN: ${{ secrets.AUTH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
