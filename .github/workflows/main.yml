@@ -13,11 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "gopcn"
-          git config --global user.email "121377609+gopcn@users.noreply.github.com"
-
       - name: Get latest release
         id: get-latest-release
         uses: pozetroninc/github-action-get-latest-release@master
@@ -32,9 +27,9 @@ jobs:
       - name: Commit Changes
         uses: github-actions-x/commit@v2.9
         with:
-          github-token: ${{ secrets.AUTH_PAT }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "${{ steps.get-latest-release.outputs.release }}"
           files: artalk artalk.yml
           rebase: 'true'
-          name: gopcn
-          email: 121377609+gopcn@users.noreply.github.com
+          name: GitHub Action
+          email: action@github.com

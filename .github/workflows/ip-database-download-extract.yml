@@ -1,0 +1,29 @@
+name: Update IP Database
+
+on:
+  schedule:
+    - cron: '25,50 * * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download and Extract IP Attribution Database
+        run: |
+          mkdir -p data
+          download_url="https://github.com/lionsoul2014/ip2region/raw/master/data/ip2region.xdb"
+          echo "downloading $download_url"
+          curl -sL "$download_url" -o ./data/ip2region.xdb
+
+      - name: Commit and push changes if necessary
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Update IP Database"
+          git push origin main
