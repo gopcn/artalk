@@ -1,12 +1,6 @@
-<p align="center">
-<a href="https://usememos.com/"><img height="100px" alt="logo" src="https://usememos.com/logo.webp"/></a>
-</p>
-
-<p align="center"><b><a href="https://github.com/usememos/memos">memos</a>-<a href="https://replit.com">replit</a></b></p>
-
 **Blank Repl**
 ```bash
-git clone https://github.com/gopcn/memos-replit.git &&
+git clone git clone -b master https://github.com/gopcn/artalk.git &&
 shopt -s dotglob &&
 mv -b memos-replit/* ./ &&
 rm -rf *~ memos-replit .git .github update.sh README.md &&
