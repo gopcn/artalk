@@ -1,12 +1,5 @@
-<div align=center>
-
-# [Artalk](https://github.com/ArtalkJS/Artalk)-[Replit](https://replit.com)
-</div>
-
-**Blank Repl**
-
 ```bash
-git clone https://github.com/gopcn/artalk-replit.git &&
+git clone https://github.com/gopcn/artalk.git &&
 shopt -s dotglob &&
 mv -b artalk-replit/* ./ &&
 rm -rf *~ artalk-replit .git README.md .github &&
