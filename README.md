@@ -1,8 +1,9 @@
+**[Blank Repl](https://replit.com)**
 ```bash
 git clone        &&
 shopt -s dotglob &&
-mv -b artalk-replit/* ./ &&
-rm -rf *~ artalk-replit .git README.md .github &&
+mv -b        /* ./ &&
+rm -rf *~         .git README.md .github &&
 echo "部署成功，点击Run使用。"
 ```
 
