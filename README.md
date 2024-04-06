@@ -1,5 +1,5 @@
 ```bash
-git clone https://github.com/gopcn/artalk.git &&
+git clone        &&
 shopt -s dotglob &&
 mv -b artalk-replit/* ./ &&
 rm -rf *~ artalk-replit .git README.md .github &&
@@ -8,16 +8,20 @@ echo "部署成功，点击Run使用。"
 
 **加密密钥 app_key**
 ```python
-import secrets
-import string
+pip install pycryptodome
+```
+```python
+from Crypto.Random import get_random_bytes
+import binascii
 
-def generate_app_key(length):
-    chars = string.ascii_letters + string.digits
-    return ''.join(secrets.choice(chars) for _ in range(length))
+def generate_session_key():
+    # Directly return 32-byte random key for AES-256
+    return get_random_bytes(32)
 
-# 生成一个长度为32的随机app_key
-app_key = generate_app_key(32)
-print(app_key)
+# Generate the key and convert it to HEX
+session_key = generate_session_key()
+hex_key = binascii.hexlify(session_key).decode('utf-8')
+print("Generated Session Key (HEX):", hex_key)
 ```
 
 **程序升级**
